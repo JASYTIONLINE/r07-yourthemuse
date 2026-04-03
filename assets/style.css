@@ -32,6 +32,9 @@ By changing a value here, the entire site updates accordingly — a scalable, ma
     /* Shared outer width for nav, footer, and every .card (header / section / main) */
     --site-max-width: 2100px;
     --site-horizontal-inset: 24px;
+    /* Standard paragraph size; proportional text uses calc(var(--font-p) * …). Fixed UI uses --font-ui. */
+    --font-p: 2rem;
+    --font-ui: 1rem;
 }
 
 /* 
@@ -70,6 +73,15 @@ body {
     line-height: 1.55;
     overflow-x: hidden;
     overflow-y: auto;
+}
+
+p {
+    font-size: var(--font-p);
+}
+
+/* Broken-image fallback uses this font size instead of inheriting .card / --font-p */
+img {
+    font-size: 1rem;
 }
 
 /* Wide screens (e.g. 2560×1440): no horizontal scrollbar; content stays within viewport */
@@ -115,7 +127,7 @@ header h2 {
 }
 
 header h2 {
-    font-size: 1.1rem;
+    font-size: calc(var(--font-p) * 1.1);
     font-weight: normal;
 }
 
@@ -157,6 +169,7 @@ Designed to visually stand out while remaining flexible in layout.
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: var(--font-ui);
     font-weight: bold;
     height: 56px;
     padding: 0 .5rem;
@@ -220,6 +233,7 @@ Gives each section a boxed appearance with padding, border, and radius.
     color: var(--text);
     display: flex;
     flex-direction: column;
+    font-size: var(--font-p);
     gap: 0 12px;
     margin: 8px auto;
     max-width: 100%;
@@ -289,6 +303,7 @@ Utility classes for aligning text without affecting layout:
   background-color: #000;
   color: var(--gold);
   box-sizing: border-box;
+  font-size: var(--font-ui);
 }
 
 .form-field:focus {
@@ -298,7 +313,7 @@ Utility classes for aligning text without affecting layout:
 }
 
 .form-disclaimer {
-  font-size: 0.8rem;
+  font-size: calc(var(--font-p) * 0.8);
   line-height: 1.45;
   color: #c9a860;
   margin: 0.35rem 0 1rem;
@@ -361,7 +376,7 @@ Applies standout style to any text links placed in the jingle box.
 .jingle-box a {
     color: var(--gold);
     display: block;
-    font-size: 1.05rem;
+    font-size: calc(var(--font-p) * 1.05);
     font-weight: bold;
     text-decoration: none;
 }
@@ -383,17 +398,18 @@ Compact text container placed below the About page heading.
     border: 2px solid var(--gold);
     border-radius: 8px;
     color: var(--gold);
-    font-size: 0.95rem;
+    font-size: calc(var(--font-p) * 0.75);
     padding: 8px 12px;
     text-align: center;
 }
 
 .note-box h2 {
-    font-size: 1.15rem;
+    font-size: 1.211em;
     margin: 0 0 10px 0;
 }
 
 .note-box p {
+    font-size: inherit;
     margin: 4px 0;
 }
 
@@ -476,11 +492,31 @@ Centers and styles the title of each song tile.
     justify-content: center;
     text-align: center;
     color: var(--gold);
-    font-size: .9rem;
+    font-size: calc(var(--font-p) * 0.9);
     font-weight: 600;
     line-height: 1.15;
     margin: 0;
     padding: 0;
+}
+
+/* About + catalog TIMs: title row grows with wrapping; titles scale with tile width (cap 0.72× --font-p) */
+.about-page .TIM,
+.catalog-page .TIM {
+    container-type: inline-size;
+    grid-template-rows: auto 1in auto;
+}
+
+.about-page .TIM .tile-title,
+.catalog-page .TIM .tile-title {
+    font-size: clamp(0.65rem, 12cqi, calc(var(--font-p) * 0.72));
+    line-height: 1.12;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding-inline: 2px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 /* 
@@ -639,7 +675,7 @@ Ensures consistency in appearance and prevents overflow.
 .catalog-page .catalog-section-title {
     font-family: Georgia, serif;
     color: var(--gold);
-    font-size: 1.35rem;
+    font-size: calc(var(--font-p) * 1.35);
     font-weight: 600;
     text-align: center;
     margin: 0 0 0.85rem;
@@ -833,8 +869,13 @@ Ensures consistency in appearance and prevents overflow.
         gap: 0.35rem;
     }
 
+    .about-page .TIM,
+    .catalog-page .TIM {
+        grid-template-rows: auto auto auto;
+    }
+
     .TIM .tile-title {
-        font-size: 1rem;
+        font-size: var(--font-p);
         padding-bottom: 0.25rem;
     }
 
