@@ -465,6 +465,7 @@ Centers and styles the title of each song tile.
     align-items: center;
     justify-content: center;
     text-align: center;
+    color: var(--gold);
     font-size: .9rem;
     font-weight: 600;
     line-height: 1.15;
