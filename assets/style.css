@@ -235,6 +235,19 @@ Maintains clean layout and containment.
 }
 
 /* 
+MAIN HEADING ALIGNMENT
+Centers headings inside <main> for consistency with header titles and demo sections.
+*/
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6 {
+    text-align: center;
+}
+
+/* 
 TEXT ALIGNMENT UTILITIES
 Utility classes for aligning text without affecting layout:
 - text-center, text-left, etc.
@@ -363,6 +376,11 @@ Compact text container placed below the About page heading.
     font-size: 0.95rem;
     padding: 8px 12px;
     text-align: center;
+}
+
+.note-box h2 {
+    font-size: 1.15rem;
+    margin: 0 0 10px 0;
 }
 
 .note-box p {
