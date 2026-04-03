@@ -29,6 +29,9 @@ By changing a value here, the entire site updates accordingly — a scalable, ma
     --card: #5c1a14;
     --gold: #ffd56a;
     --text: #ffffff;
+    /* Shared outer width for nav, footer, and every .card (header / section / main) */
+    --site-max-width: 2100px;
+    --site-horizontal-inset: 24px;
 }
 
 /* 
@@ -206,21 +209,28 @@ Applies sizing rules for buttons inside .button-row.
 Used for header, main content, and footer containers.
 Gives each section a boxed appearance with padding, border, and radius.
 
-- Uses max width of 92% viewport or 1920px for readability
+- Uses --site-max-width and --site-horizontal-inset (same as nav/footer)
 - Adds spacing between elements vertically
 */
 .card {
     background: var(--card);
     border: 2px solid var(--gold);
     border-radius: 12px;
+    box-sizing: border-box;
     color: var(--text);
     display: flex;
     flex-direction: column;
     gap: 0 12px;
     margin: 8px auto;
-    padding: 8px;
-    width: min(1920px, calc(100% - 24px));
     max-width: 100%;
+    min-width: 0;
+    padding: 8px;
+    width: min(var(--site-max-width), calc(100% - var(--site-horizontal-inset)));
+}
+
+/* Prevent wide grids/tiles from visually widening <main> past other .card blocks */
+main.card {
+    overflow-x: clip;
 }
 
 /* 
@@ -602,14 +612,22 @@ Ensures consistency in appearance and prevents overflow.
     max-width: none;
 }
 
-/* Catalog genre sections: labeled blocks of 8 songs, gold divider between each */
+/* Catalog genre sections: labeled blocks of 8 songs, gold divider between each.
+   Do not set width: 100% here — it overrides .card and breaks the site max-width cap. */
 .catalog-page .catalog-main {
+    align-items: stretch;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    min-width: 0;
     gap: 0;
+    max-width: 100%;
+    min-width: 0;
+}
+
+/* Keep each genre block inside the main card when the grid reflows */
+.catalog-page .catalog-section {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0;
 }
 
 .catalog-page .catalog-section:not(:first-child) {
@@ -636,7 +654,7 @@ Ensures consistency in appearance and prevents overflow.
     border: 2px solid var(--gold);
     border-radius: 12px;
     box-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
-    width: min(1920px, calc(100% - 24px));
+    width: min(var(--site-max-width), calc(100% - var(--site-horizontal-inset)));
     max-width: 100%;
     margin: 8px auto 0;
 }
@@ -694,7 +712,7 @@ Ensures consistency in appearance and prevents overflow.
     border-radius: 12px;
     box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.45);
     margin: 8px auto;
-    width: min(1920px, calc(100% - 24px));
+    width: min(var(--site-max-width), calc(100% - var(--site-horizontal-inset)));
     max-width: 100%;
 }
 
@@ -776,7 +794,7 @@ Ensures consistency in appearance and prevents overflow.
         border-radius: 12px;
         padding: 0.45rem 0.5rem 0.5rem;
         margin: 8px auto;
-        width: min(1920px, calc(100% - 24px));
+        width: min(var(--site-max-width), calc(100% - var(--site-horizontal-inset)));
         box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.35);
         box-sizing: border-box;
     }
