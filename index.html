@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-site-page="home" data-site-section="root">
 
 <head>
     <meta charset="utf-8" />
@@ -11,12 +11,7 @@
 <body id="top">
 
     <nav class="site-nav" aria-label="Main navigation">
-        <div class="site-nav-inner">
-            <a href="index.html#top" aria-current="page">Home</a>
-            <a href="contents/about.html">About</a>
-            <a href="contents/catalog.html">Catalog</a>
-            <a href="contents/order.html">Order now</a>
-        </div>
+        <div class="site-nav-inner" id="site-nav-inner"></div>
     </nav>
 
     <!-- *<header class="card">* is the HOMEPAGE HEADER SECTION. <header> contains <h1> and <h2> for accessibility and semantic structure. The .card class applies the site’s framed card style to visually separate this section from the main content and footer.  
@@ -108,14 +103,9 @@ Placed as the inner content of the <audio> element, so it is only shown when nec
     </main>
 
     <footer class="site-footer-nav" aria-label="Footer navigation">
-        <div class="site-nav-inner">
-            <a href="index.html#top" aria-current="page">Home</a>
-            <a href="contents/about.html">About</a>
-            <a href="contents/catalog.html">Catalog</a>
-            <a href="contents/order.html">Order now</a>
-            <a href="#top">Back to top</a>
-        </div>
+        <div class="site-nav-inner" id="site-footer-inner"></div>
     </footer>
+    <script src="assets/js/site-include.js" defer></script>
 </body>
 
 </html>
