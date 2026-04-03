@@ -187,37 +187,6 @@ Brightens the button fill when hovered to give feedback to the user.
 }
 
 /* 
-.button-row — FLEX CONTAINER FOR BUTTONS
-Horizontally aligns a row of buttons using flexbox. 
-Buttons automatically wrap to a new line if the screen is too narrow.
-
-- No vertical spacing between lines
-- Horizontal gap between buttons
-- Keeps layout compact and centered
-*/
-.button-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0 12px;
-    padding: 0.5rem;
-}
-
-/* 
-.button-row .btn — BUTTON RESIZING RULES
-Applies sizing rules for buttons inside .button-row.
-
-- Prevents buttons from stretching
-- Ensures they remain usable on smaller screens
-- Centers button text for consistency
-*/
-.button-row .btn {
-    flex: 0 1 auto;
-    min-width: 120px;
-    text-align: center;
-}
-
-/* 
 .card — FRAMED CONTAINER
 Used for header, main content, and footer containers.
 Gives each section a boxed appearance with padding, border, and radius.
@@ -274,23 +243,11 @@ main h6 {
 /* 
 TEXT ALIGNMENT UTILITIES
 Utility classes for aligning text without affecting layout:
-- text-center, text-left, etc.
+- text-center
 - Reusable across any element or container
 */
 .text-center {
     text-align: center;
-}
-
-.text-justify {
-    text-align: justify;
-}
-
-.text-left {
-    text-align: left;
-}
-
-.text-right {
-    text-align: right;
 }
 
 .form-field {
@@ -429,35 +386,6 @@ Grid container for sample song players. Automatically fits four tiles per row on
     padding: 0 12px;
     min-width: 0;
 }
-
-/* === Catalog Grid Layout === */
-
-/*justify-center → centers the whole grid horizontally
-    place-items-center → centers each .TIM tile in its grid cell both horizontally and vertically. */
-.catalog-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
-  justify-content: center;
-}
-
-.catalog-grid > .TIM {
-  justify-self: center;
-}
-
-/* Responsive grid breakpoints */
-@media (max-width: 1024px) {
-  .catalog-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .catalog-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 
 /* 
 .TIM — SONG TILE
@@ -992,12 +920,5 @@ Ensures consistency in appearance and prevents overflow.
         min-width: unset;
         max-width: 320px;
         margin: 0 auto 8px;
-    }
-
-    .button-row {
-        flex-direction: column;
-        align-items: stretch;
-        padding-left: 1rem;
-        padding-right: 1rem;
     }
 }
