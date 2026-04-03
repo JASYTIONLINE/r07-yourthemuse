@@ -441,7 +441,7 @@ Each tile includes title, image, and audio player stacked vertically.
 - Keeps layout uniform across the sample grid
 */
 .TIM {
-    background: rgba(0, 0, 0, 0.25);
+    background: #000;
     border: 3px solid var(--gold);
     border-radius: 10px;
     box-sizing: border-box;
