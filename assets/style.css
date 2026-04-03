@@ -538,31 +538,93 @@ Ensures consistency in appearance and prevents overflow.
 .TIM .btn-order-similar {
     flex: 0 1 auto;
     width: auto;
-    max-width: none;
-    min-width: 0;
+    max-width: 100%;
+    min-width: 2.6rem;
     height: auto;
-    min-height: 0;
+    min-height: 2.25rem;
     margin: 0;
-    padding: 2px 7px;
-    font-size: 0.55rem;
-    line-height: 1.2;
+    padding: 4px 6px;
+    font-size: 0.58rem;
+    line-height: 1.08;
     box-sizing: border-box;
     align-self: center;
     text-align: center;
-    white-space: nowrap;
+    white-space: normal;
     border-width: 1px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Wider sample grid on the 36-item catalog page (tablet / desktop) */
+.TIM .btn-order-similar .btn-order-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    line-height: 1.05;
+}
+
+.TIM .btn-order-similar .btn-order-stack span {
+    display: block;
+}
+
+/*
+ * Catalog grid: fill the main card (no 1400px cap). Eight columns only when the
+ * row is wide enough for ~8 × min tile width + gaps (~172px/col → ~1460px).
+ * Below that, auto-fill drops to 7, 6… so play + order stay side by side.
+ */
 .catalog-page .grid-4col {
-    max-width: min(1400px, 100%);
-    grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+    width: 100%;
+    max-width: 100%;
     min-width: 0;
+    box-sizing: border-box;
 }
 
-/* Slightly wider catalog cards so play + “Order similar” fit on one line */
+@media (min-width: 769px) and (max-width: 1519px) {
+    .catalog-page .grid-4col {
+        grid-template-columns: repeat(auto-fill, minmax(172px, 1fr));
+    }
+}
+
+@media (min-width: 1520px) {
+    .catalog-page .grid-4col {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+}
+
+/* Tiles fill their grid cell so wide rows use space (play + order stay one row) */
 .catalog-page .TIM {
-    width: min(2.85in, 100%);
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+}
+
+/* Catalog genre sections: labeled blocks of 8 songs, gold divider between each */
+.catalog-page .catalog-main {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    gap: 0;
+}
+
+.catalog-page .catalog-section:not(:first-child) {
+    border-top: 2px solid var(--gold);
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+}
+
+.catalog-page .catalog-section-title {
+    font-family: Georgia, serif;
+    color: var(--gold);
+    font-size: 1.35rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 0.85rem;
+    padding: 0;
 }
 
 /* Top navigation — scrolls with page on desktop; pinned only in mobile (see @media below) */
