@@ -5,6 +5,11 @@
  *   - data-site-section: "root" (index.html) or "contents" (pages under contents/)
  *   - data-site-page: "home" | "about" | "catalog" | "order" for aria-current on that item;
  *     any other value (e.g. a new page) still gets the same footer and nav; only current-page highlighting skips unknown ids.
+
+ * Student reading notes: document.documentElement is the <html> node; its dataset property reflects data-* attributes.
+ * Assigning to element.innerHTML replaces all child nodes of #site-nav-inner and #site-footer-inner with newly parsed
+ * markup, which is why those divs are empty in the source files but show links after load. Layout of those links is
+ * entirely determined by CSS on .site-nav-inner and .site-footer-nav, not by this script.
  */
 (function () {
   var CONTACT_MAILTO =

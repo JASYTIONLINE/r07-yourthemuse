@@ -1,4 +1,12 @@
 <!doctype html>
+<!--
+  STUDY GUIDE (catalog page): body.catalog-page enables overrides for .catalog-main, .catalog-section, .grid-4col, and
+  .TIM. main.catalog-main is a flex column with stretched children so each genre section spans the card width. .grid-4col
+  is a grid container whose column template changes in media queries for responsive dynamics. .tile-player-inner uses flex
+  row versus column at breakpoints so audio and the Order button reflow without JavaScript. Nav and footer are filled by
+  site-include.js.
+-->
+
 <html lang="en" data-site-page="catalog" data-site-section="contents">
 
 <head>
@@ -8,7 +16,13 @@
   <link rel="stylesheet" href="../assets/style.css">
 </head>
 
+<!--
+  Stylesheet path is relative to this folder; catalog-specific selectors layer on top of shared .card and .TIM rules.
+-->
 <body class="catalog-page" id="top">
+  <!--
+  Catalog body uses the same three-row page grid; min-width zero on grid children avoids horizontal overflow from wide grids.
+-->
 
   <nav class="site-nav" aria-label="Main navigation">
     <div class="site-nav-inner" id="site-nav-inner"></div>
@@ -19,6 +33,10 @@
     <h2>Samples to inspire your style</h2>
   </header>
 
+  <!--
+  The note-box sits in the body grid between the catalog header card and main; as a block-level .card,
+  it participates in normal vertical stacking with margin collapse handled by the parent grid, not by floats.
+-->
   <section class="card note-box">
     <p>
       This page brings together samples in different <strong>styles and genres</strong> so you can listen, compare, and get ideas for your own custom song.
@@ -34,6 +52,10 @@
     </p>
   </section>
 
+  <!--
+  catalog-main stacks .catalog-section flex items; each section wraps a heading plus a .grid-4col of .TIM tiles. Tile
+  width rules let cells use available space on wide screens while keeping internal player rows aligned.
+-->
   <main class="card catalog-main">
     <section class="catalog-section" aria-labelledby="catalog-country-heading">
       <h2 id="catalog-country-heading" class="catalog-section-title">Country</h2>

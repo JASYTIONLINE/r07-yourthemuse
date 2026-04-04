@@ -1,4 +1,10 @@
 <!doctype html>
+<!--
+  STUDY GUIDE (order page): site-include.js mutates nav/footer placeholders. order-form.js adds a submit listener
+  on #orderForm that calls preventDefault (no navigation), sets confirmation.hidden = false, and form.reset() to clear
+  controls. In DevTools, watch the hidden attribute on #confirmation when you submit.
+-->
+
 <html lang="en" data-site-page="order" data-site-section="contents">
 
 <head>
@@ -8,18 +14,32 @@
   <link rel="stylesheet" href="../assets/style.css">
 </head>
 
+<!--
+  Shared stylesheet; .order-page rules adjust mail hint spacing only slightly—the form layout is mostly global .form-field and .btn.
+-->
 <body class="order-page" id="top">
+  <!--
+  Same body grid as other pages; scripts at the bottom use defer and run in document order after the DOM is parsed.
+-->
 
   <nav class="site-nav" aria-label="Main navigation">
     <div class="site-nav-inner" id="site-nav-inner"></div>
   </nav>
 
+  <!--
+  Header .card is a flex column of headings; each heading is a full-width flex item stacked vertically.
+-->
   <header class="card">
     <h1>Order your custom song</h1>
     <h2>Tell me about your story — I’ll reach out by email</h2>
     <h3 class="text-center">Please fill in whatever you can. These questions are just a guide.</h3>
   </header>
 
+  <!--
+  main.card stacks the mail hint and #sample-order. .form-field uses width 100 percent with max-width and
+  box-sizing border-box so padding does not expand past the card. .btn gives the submit control a fixed height and
+  flex centering for predictable placement in vertical flow.
+-->
   <main class="card">
     <p class="order-mail-hint text-center">
       Prefer email only? You can also
@@ -30,6 +50,10 @@
     <section id="sample-order" class="sample-order-box">
       <h3 class="text-center">Custom song order form</h3>
 
+      <!--
+  The form is block-level content in normal flow. order-form.js selects by id and only changes submit behavior and
+  the confirmation paragraph visibility; it does not restructure the form tree.
+-->
       <form id="orderForm">
 
         <label for="name">Name:</label><br>
@@ -76,6 +100,10 @@ Here are some ideas to get you started:
         <button type="submit" class="btn">Submit</button>
       </form>
 
+      <!--
+  The hidden attribute removes this paragraph from layout when present; JavaScript toggles hidden to reveal it after
+  a client-side submit without creating new nodes.
+-->
       <p id="confirmation" class="order-confirmation text-center" hidden>
         Thank you! We&apos;ll follow up by email.
       </p>
@@ -87,6 +115,10 @@ Here are some ideas to get you started:
   </footer>
 
   <script src="../assets/js/site-include.js" defer></script>
+  <!--
+  order-form.js runs after site-include.js because both use defer and this tag comes second; order matters if one
+  script depended on nodes the other creates.
+-->
   <script src="../assets/js/order-form.js" defer></script>
 </body>
 

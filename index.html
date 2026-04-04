@@ -1,25 +1,58 @@
 <!doctype html>
+<!--
+  STUDY GUIDE (home page): This file pairs with assets/style.css and assets/js/site-include.js.
+  When you read the CSS, look up display, flex-direction, grid-template-rows, width, max-width,
+  min-width, padding, margin, box-sizing, gap, and overflow; those properties decide how boxes are
+  sized and how they participate in normal flow versus flex or grid formatting contexts.
+  When you read the JavaScript, watch how the script locates nodes in the live DOM tree and assigns
+  innerHTML, which replaces the entire markup inside a container in one step.
+-->
 <html lang="en" data-site-page="home" data-site-section="root">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>This Is Your Song — Home</title>
+    <!--
+  The stylesheet is applied to the whole document. Rules cascade from global selectors (html, body)
+  into every section below; later rules and more specific selectors override earlier ones when they
+  conflict. Inspect .card and .site-nav in the CSS file to see flex containers that stack or align
+  their children without you adding extra wrapper markup beyond what you see here.
+-->
     <link rel="stylesheet" href="assets/style.css">
 </head>
 
+<!--
+  The root element carries data-site-section="root" and data-site-page="home" so site-include.js can
+  read document.documentElement.dataset and build correct relative URLs for links. Those attributes do
+  not change layout by themselves; they are inputs to JavaScript that runs after the parser has built
+  the DOM. The script then writes anchor elements into the empty divs in the nav and footer.
+-->
 <body id="top">
+    <!--
+  Global CSS gives body display: grid with three rows (auto, 1fr, auto), so the main column of the
+  page stretches vertically between the nav band and the footer while the nav and footer rows take
+  only the height their content needs. min-width: 0 on direct children of body prevents flex and
+  grid items from refusing to shrink, which would otherwise cause unwanted horizontal overflow.
+-->
 
     <nav class="site-nav" aria-label="Main navigation">
+        <!--
+  This div starts empty in the HTML file. After DOMContentLoaded, site-include.js sets
+  site-nav-inner.innerHTML to a string of anchor elements. The browser parses that string into real
+  nodes attached under this div, so the navigation structure you see in DevTools was produced by
+  JavaScript, not by static markup. The nav layout (centering links, wrapping on small widths) comes
+  from .site-nav and .site-nav-inner in CSS, which use flexbox.
+-->
         <div class="site-nav-inner" id="site-nav-inner"></div>
     </nav>
 
-    <!-- *<header class="card">* is the HOMEPAGE HEADER SECTION. <header> contains <h1> and <h2> for accessibility and semantic structure. The .card class applies the site’s framed card style to visually separate this section from the main content and footer.  
-  
-    - *<h1>*: Defines the primary heading of the page ("This Is Your Song"), critical for screen readers and SEO.
-    - *<h2>*: Provides a supporting subtitle that gives more context to the site purpose.
-
-    Placing them at the top establishes the visual and structural hierarchy immediately when the page loads.
+    <!--
+  .card is a flex container with flex-direction: column, so the heading, subtitle, and following
+  blocks stack top to bottom in document order. width uses min() to cap the box relative to the
+  viewport while margin: auto centers the card in the available horizontal space. Padding increases
+  the area inside the border box before content begins; compare content-box versus border-box in
+  your course materials to see why box-sizing matters for width calculations.
 -->
     <header class="card">
         <h1>This Is Your Song.</h1>
@@ -38,15 +71,17 @@
         </div>
     </header>
 
-    <!-- *<main class="card">*: "<main>" is the HTML5 element for the primary content of the page. It signals to browsers, search engines, and assistive technologies which part of the page is the main content.
-
-    The *.card* class applies the site’s framed card style to visually separate this section from the header and footer.
-  
-    Placed here (immediately after <header>) so the user and screen readers encounter the core content first, following a logical top-down structure.
+    <!--
+  main.card reuses the same flex column layout as the header. main.card also sets overflow-x: clip so
+  wide replaced content (for example native audio controls) cannot expand the card past the width
+  established by siblings on other pages; on the home page the effect is mostly defensive.
 -->
     <main class="card">
 
-        <!-- Intro copy above the jingle demo: groups the two <p> blocks inside <main> so they read as one block before the .jingle-box player. Padding and framing come from the parent .card; this div is structural only.
+        <!--
+  This anonymous div groups two paragraphs into one block-level box before the jingle section.
+  The flex parent (.card) treats this div as a single flex item, so the two paragraphs stay
+  together in the vertical stack. No JavaScript touches this region on the home page.
 -->
         <div>
 
@@ -57,50 +92,39 @@
                 They’ll help inspire ideas for your own custom song.</p>
         </div>
 
-        <!-- *<div class="jingle-box">* is the jingle demo AUDIO DEMO CONTAINER. It uses an embedded audio player so visitors can play the jingle without leaving the page. 
-    
-This <div> visually isolates the player from the surrounding text using a black background and gold border for emphasis.
-
-The .jingle-box class applies custom styling (background, border, padding) to make the section stand out and signal interactivity to the user.
-
-Placed directly after the introductory text to allow users to hear a sample before exploring further. While this could technically appear elsewhere on the page, placing it here follows a logical content-first, example-second flow that enhances usability and storytelling.
+        <!--
+  .jingle-box is display: inline-block with horizontal margins set to auto inside a flex column
+  parent, which is a common pattern to shrink-wrap the box to its content while still centering
+  it along the cross axis of the flex container. max-width: 100% keeps the box from exceeding
+  the card width on narrow viewports. Inside, rules on .card audio cap media elements at 100% of
+  the container so the control bar does not spill out of the card.
 -->
         <div class="jingle-box">
             <h3>Play Jingle Demo</h3>
 
-            <!-- *<audio controls>*: is an HTML5 AUDIO PLAYER ELEMENT. It allows users to play, pause, and control playback of an embedded audio file directly within the page using their browser's built-in media controls.
-
-The controls attribute adds a visible interface (play/pause, timeline, volume) without requiring custom JavaScript. This ensures consistent cross-browser functionality and accessibility. 
-
-Using the native <audio> tag avoids external plugins and provides a lightweight way to deliver audio content.
-
-Placed inside the .jingle-box container to keep the player visually isolated and stylistically distinct from the surrounding content. If moved outside this context, it would lose its design framing and potentially confuse the visual flow of the page.
--->
             <audio controls>
 
 
-                <!-- *<source src="assets/jingle.mp3" type="audio/mpeg">*: is the AUDIO SOURCE FILE for the embedded player above. It tells the <audio> element where to find the media file and what format it’s in, enabling the browser to decode and play it.
-
-The src attribute points to a local MP3 file inside the assets directory. The type attribute explicitly declares it as audio/mpeg, which helps browsers determine compatibility and preload decisions.
-
-Placed directly inside the <audio> element to link the playback controls with the actual media content. If omitted, the player would still render but would be non-functional.
--->
                 <source src="assets/audio/jingle.mp3" type="audio/mpeg">
 
-                <!-- *Your browser does not support the audio element.*: is the AUDIO FALLBACK MESSAGE. It displays a plain text notice to users whose browsers do not support the HTML5 <audio> element.
-
-This ensures graceful degradation: even if the player cannot render, users receive feedback rather than seeing a blank space. While this situation is rare in modern browsers, the fallback maintains accessibility and communicates intent clearly.
-
-Placed as the inner content of the <audio> element, so it is only shown when necessary — i.e., if the audio cannot load or play. Removing it would result in a silent failure on unsupported browsers.
--->
                 Your browser does not support the audio element.
             </audio>
         </div>
     </main>
 
     <footer class="site-footer-nav" aria-label="Footer navigation">
+        <!--
+  Same injection target pattern as the top nav: JavaScript fills site-footer-inner with anchors,
+  including mailto and in-page links. Footer layout mirrors the nav flex rules so the link row
+  behaves consistently at different breakpoints (see media queries affecting .site-footer-nav).
+-->
         <div class="site-nav-inner" id="site-footer-inner"></div>
     </footer>
+    <!--
+  defer delays execution until HTML parsing finishes, so the DOM nodes above exist when the script
+  runs. The script queries getElementById and writes innerHTML; the outcome is a DOM mutation: new
+  elements appear under the placeholder divs after load.
+-->
     <script src="assets/js/site-include.js" defer></script>
 </body>
 
