@@ -16,6 +16,7 @@ A static, multi-page marketing and catalog site for **This Is Your Song**—a cu
 - [Getting started](#getting-started)
 - [Deployment](#deployment)
 - [Site architecture](#site-architecture)
+- [Typography and scaling](#typography-and-scaling)
 - [Customizing content](#customizing-content)
 - [Order form behavior](#order-form-behavior)
 - [Accessibility and semantics](#accessibility-and-semantics)
@@ -29,7 +30,7 @@ A static, multi-page marketing and catalog site for **This Is Your Song**—a cu
 
 ## Overview
 
-This project is a **hand-authored static website**: HTML for structure, a single shared CSS file for layout and theme, and a small amount of vanilla JavaScript for shared navigation, footer links, and client-side order-form UX. There is **no build step** and **no package manager**; you can edit files directly and refresh the browser.
+This project is a **hand-authored static website**: HTML for structure, a single shared CSS file for layout and theme, and a small amount of vanilla JavaScript for shared navigation, footer links, optional injected call-to-action copy, and client-side order-form UX. There is **no build step** and **no package manager**; you can edit files directly and refresh the browser.
 
 Primary audiences:
 
@@ -41,11 +42,12 @@ Primary audiences:
 
 ## Features
 
-- **Home** — Introduction, value proposition, and embedded jingle demo.
-- **More Info** — Origin story, explanatory copy, and multiple audio examples (“one song, four styles”).
+- **Home** — Introduction, value proposition, embedded jingle demo, and a short **Know More** link to More Info; lead lines use heading levels for emphasis.
+- **More Info** (`more-info.html`) — Origin story, explanatory copy, a larger featured **We Are the Guard** tile (`.AboutFeature`), and multiple audio examples (“one song, four styles”).
 - **Catalog** — Genre sections with repeatable “tile” cards (image, title, audio, “Order similar” link to the order form).
-- **Order** — Guided form fields, optional file inputs, prefilled **Contact** mailto in the footer, and inline thank-you message after submit (client-side only).
+- **Order** — Guided form fields; optional **Talk to Me** audio upload (with caption and a link to [Windows Sound Recorder](https://apps.microsoft.com/detail/9WZDNCRFHWKN) for PC users); optional lyrics and reference MP3 uploads; prefilled **Contact** mailto in the footer; inline thank-you after submit (client-side only).
 - **Shared navigation** — Top nav and footer generated consistently via JavaScript from `data-*` attributes on `<html>`.
+- **Shared call-to-action** — On pages that include `#site-call-to-action`, [`site-include.js`](assets/js/site-include.js) injects the same catalog / order / contact paragraph so copy and links stay in one place (Home and More Info).
 - **Responsive layout** — CSS grid and flexbox, including catalog layouts tuned for smaller and larger viewports.
 
 ---
@@ -72,7 +74,7 @@ Primary audiences:
 ├── assets/
 │   ├── style.css              # Global stylesheet for all pages
 │   ├── js/
-│   │   ├── site-include.js    # Injects top nav + footer
+│   │   ├── site-include.js    # Injects top nav, footer, optional #site-call-to-action CTA
 │   │   └── order-form.js      # Order page: prevent default submit, show confirmation, reset
 │   ├── audio/                 # MP3 samples (referenced from HTML)
 │   ├── images/                # PNG/WebP-style assets for tiles and pages
@@ -174,6 +176,7 @@ Placeholder elements:
 
 - `#site-nav-inner` — top navigation target.
 - `#site-footer-inner` — footer navigation target.
+- `#site-call-to-action` — optional; empty `<section class="CallToAction" id="site-call-to-action">` on [Home](index.html) and [More Info](contents/more-info.html). Filled by `renderCallToAction()` in `site-include.js`. The section uses `display: contents` so layout matches a plain paragraph inside the card.
 
 ### Styling
 
@@ -183,10 +186,25 @@ Placeholder elements:
 
 | File | Role |
 |------|------|
-| [`index.html`](index.html) | Home, jingle demo |
-| [`contents/more-info.html`](contents/more-info.html) | Story + multi-style samples |
+| [`index.html`](index.html) | Home, jingle demo, optional CTA block |
+| [`contents/more-info.html`](contents/more-info.html) | Story + multi-style samples + optional CTA block |
 | [`contents/catalog.html`](contents/catalog.html) | Large catalog of genre-grouped tiles |
 | [`contents/order.html`](contents/order.html) | Order form + confirmation message |
+
+---
+
+## Typography and scaling
+
+The site uses CSS custom properties in [`assets/style.css`](assets/style.css) `:root` to separate **scalable story/layout text** from **fixed UI chrome**:
+
+| Token | Typical use |
+|-------|-------------|
+| **`--font-p`** | Base scale for `.card` content: headings (`calc(var(--font-p) * …)`), body flow inside cards, tile titles (including `clamp` + container query units where used), jingle box, **form disclaimers** (`.form-disclaimer`), and other proportional sizing. **Changing `--font-p` rescales this whole group together.** |
+| **`--font-ui`** | **Fixed-feel controls**: submit button (`.btn`), form inputs (`.form-field`), and similar UI set explicitly to `var(--font-ui)` so labels and fields **do not balloon** when you increase `--font-p`. |
+
+Global **`p`** elements also set `font-size: 1.5rem` (at the default `--font-p` of `2rem`, that is **0.75×** the card scale). To keep paragraphs **strictly** tied to `--font-p` in one place, you can replace that rule with something like `font-size: calc(var(--font-p) * 0.75)` (maintainers should verify line length and layout after any change).
+
+**Nav/footer link text** injected by `site-include.js` uses stylesheet rules for `.site-nav a` / `.site-footer-nav a` (fixed `rem`-based sizes in CSS), so **button-like nav labels** stay visually stable while story copy scales from `--font-p`.
 
 ---
 
@@ -212,8 +230,10 @@ A future improvement (optional) is a small JSON + build script to generate the c
 
 Contact and order mailto links use a consistent subject line (**This Is Your Song**). To change the address or template, edit:
 
-- [`assets/js/site-include.js`](assets/js/site-include.js) (`CONTACT_MAILTO`)
-- The mailto `href` in [`contents/order.html`](contents/order.html) if you use a different template there
+- [`assets/js/site-include.js`](assets/js/site-include.js) (`CONTACT_MAILTO`) — also used by the injected CTA “contact me” link and nav/footer **Contact**.
+- The mailto `href` in [`contents/order.html`](contents/order.html) if you use a different template for the inline “open a prefilled message” link.
+
+**Shared CTA copy** (home + More Info): edit `renderCallToAction()` in [`assets/js/site-include.js`](assets/js/site-include.js) so catalog/order paths and wording stay correct for both `root` and `contents` URL layouts.
 
 ---
 
@@ -223,7 +243,9 @@ Contact and order mailto links use a consistent subject line (**This Is Your Son
 
 1. Calls `preventDefault()` so the page does not navigate away.
 2. Reveals the thank-you paragraph (`#confirmation`).
-3. Resets the form fields.
+3. Resets the form fields (including optional file inputs).
+
+The form includes optional uploads: **Talk to Me** (audio narrative), lyrics file, and reference MP3. File data is **not** sent anywhere by this script; real delivery still requires a backend or manual follow-up (see below).
 
 For production use cases where submissions must be **stored or emailed automatically**, integrate a form backend (Formspree, Netlify Forms, a serverless function, etc.) and replace or extend this script. Until then, visitors can still use the **Contact** mailto link in the footer (and any mailto links in copy) to reach you directly.
 
@@ -247,9 +269,9 @@ Target: **current evergreen browsers** (last two major versions of Chrome, Edge,
 
 ## Known limitations
 
-- **No server-side form handling** — see [Order form behavior](#order-form-behavior).
+- **No server-side form handling** — see [Order form behavior](#order-form-behavior); uploaded files are not transmitted by the current scripts.
 - **Large catalog HTML** — maintainability is manual unless you add a generator later.
-- **Some imagery** may still use third-party placeholders (e.g. More Info hero) until you replace them with owned assets.
+- **Some imagery** may still use third-party placeholders (e.g. More Info featured tile) until you replace them with owned assets.
 
 ---
 
