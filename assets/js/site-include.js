@@ -3,7 +3,7 @@
  *
  * On <html>:
  *   - data-site-section: "root" (index.html) or "contents" (pages under contents/)
- *   - data-site-page: "home" | "about" | "catalog" | "order" for aria-current on that item;
+ *   - data-site-page: "home" | "more-info" | "catalog" | "order" for aria-current on that item;
  *     any other value (e.g. a new page) still gets the same footer and nav; only current-page highlighting skips unknown ids.
 
  * Student reading notes: document.documentElement is the <html> node; its dataset property reflects data-* attributes.
@@ -24,14 +24,14 @@
     if (section === 'root') {
       return {
         home: 'index.html#top',
-        about: 'contents/about.html#top',
+        moreInfo: 'contents/more-info.html#top',
         catalog: 'contents/catalog.html#top',
         order: 'contents/order.html#top',
       };
     }
     return {
       home: '../index.html',
-      about: 'about.html#top',
+      moreInfo: 'more-info.html#top',
       catalog: 'catalog.html#top',
       order: 'order.html#top',
     };
@@ -49,10 +49,10 @@
       '"' +
       currentAttr(page, 'home') +
       '>Home</a><a href="' +
-      p.about +
+      p.moreInfo +
       '"' +
-      currentAttr(page, 'about') +
-      '>About</a><a href="' +
+      currentAttr(page, 'more-info') +
+      '>More Info</a><a href="' +
       p.catalog +
       '"' +
       currentAttr(page, 'catalog') +
@@ -90,10 +90,10 @@
       '"' +
       currentAttr(page, 'home') +
       '>Home</a><a href="' +
-      p.about +
+      p.moreInfo +
       '"' +
-      currentAttr(page, 'about') +
-      '>About</a><a href="' +
+      currentAttr(page, 'more-info') +
+      '>More Info</a><a href="' +
       p.catalog +
       '"' +
       currentAttr(page, 'catalog') +

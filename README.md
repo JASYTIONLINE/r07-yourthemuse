@@ -42,7 +42,7 @@ Primary audiences:
 ## Features
 
 - **Home** — Introduction, value proposition, and embedded jingle demo.
-- **About** — Origin story, explanatory copy, and multiple audio examples (“one song, four styles”).
+- **More Info** — Origin story, explanatory copy, and multiple audio examples (“one song, four styles”).
 - **Catalog** — Genre sections with repeatable “tile” cards (image, title, audio, “Order similar” link to the order form).
 - **Order** — Guided form fields, optional file inputs, prefilled **Contact** mailto in the footer, and inline thank-you message after submit (client-side only).
 - **Shared navigation** — Top nav and footer generated consistently via JavaScript from `data-*` attributes on `<html>`.
@@ -78,7 +78,7 @@ Primary audiences:
 │   ├── images/                # PNG/WebP-style assets for tiles and pages
 │   └── pdf/                   # Optional printable assets (e.g. order form PDF)
 └── contents/
-    ├── about.html
+    ├── more-info.html
     ├── catalog.html
     └── order.html
 ```
@@ -132,7 +132,7 @@ Use the URL the tool prints (often `http://localhost:8080`).
 ### 3. Verify pages
 
 - `http://localhost:8080/` — Home  
-- `http://localhost:8080/contents/about.html` — About  
+- `http://localhost:8080/contents/more-info.html` — More Info  
 - `http://localhost:8080/contents/catalog.html` — Catalog  
 - `http://localhost:8080/contents/order.html` — Order  
 
@@ -166,7 +166,7 @@ Upload the same folder structure to Netlify, Cloudflare Pages, S3 + CloudFront, 
 | Attribute            | Purpose |
 |----------------------|---------|
 | `data-site-section`  | `"root"` for [`index.html`](index.html); `"contents"` for pages under [`contents/`](contents/). |
-| `data-site-page`     | `"home"` \| `"about"` \| `"catalog"` \| `"order"` — drives `aria-current="page"` on the matching nav link. |
+| `data-site-page`     | `"home"` \| `"more-info"` \| `"catalog"` \| `"order"` — drives `aria-current="page"` on the matching nav link. |
 
 Missing attributes cause the script to exit early; nav/footer placeholders will stay empty.
 
@@ -184,7 +184,7 @@ Placeholder elements:
 | File | Role |
 |------|------|
 | [`index.html`](index.html) | Home, jingle demo |
-| [`contents/about.html`](contents/about.html) | Story + multi-style samples |
+| [`contents/more-info.html`](contents/more-info.html) | Story + multi-style samples |
 | [`contents/catalog.html`](contents/catalog.html) | Large catalog of genre-grouped tiles |
 | [`contents/order.html`](contents/order.html) | Order form + confirmation message |
 
@@ -249,7 +249,7 @@ Target: **current evergreen browsers** (last two major versions of Chrome, Edge,
 
 - **No server-side form handling** — see [Order form behavior](#order-form-behavior).
 - **Large catalog HTML** — maintainability is manual unless you add a generator later.
-- **Some imagery** may still use third-party placeholders (e.g. About hero) until you replace them with owned assets.
+- **Some imagery** may still use third-party placeholders (e.g. More Info hero) until you replace them with owned assets.
 
 ---
 
