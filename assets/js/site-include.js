@@ -7,8 +7,8 @@
  *     any other value (e.g. a new page) still gets the same footer and nav; only current-page highlighting skips unknown ids.
 
  * Student reading notes: document.documentElement is the <html> node; its dataset property reflects data-* attributes.
- * Assigning to element.innerHTML replaces all child nodes of #site-nav-inner and #site-footer-inner with newly parsed
- * markup, which is why those divs are empty in the source files but show links after load. Layout of those links is
+ * Assigning to element.innerHTML replaces all child nodes of #site-nav-inner, #site-footer-inner, and optionally
+ * #site-call-to-action with newly parsed markup. Layout of those links is
  * entirely determined by CSS on .site-nav-inner and .site-footer-nav, not by this script.
  */
 (function () {
@@ -64,6 +64,21 @@
     );
   }
 
+  function renderCallToAction(section) {
+    var p = paths(section);
+    var orderFormHref =
+      section === 'contents' ? 'order.html#sample-order' : 'contents/order.html#sample-order';
+    return (
+      '<p class="text-center">When you\'re ready, browse my <a href="' +
+      p.catalog +
+      '">Sample Catalog</a> for ideas or, if you already know what you want, <a href="' +
+      orderFormHref +
+      '">Place Your Custom Order</a> and let me create a one-of-a-kind song that is truly yours. Have a question? No problem — just <a href="' +
+      CONTACT_MAILTO +
+      '">contact me</a> via email, and I\'ll answer any questions you have.</p>'
+    );
+  }
+
   function renderFooter(page, section) {
     var p = paths(section);
     var orderFormHref =
@@ -100,8 +115,10 @@
 
     var navInner = document.getElementById('site-nav-inner');
     var footerInner = document.getElementById('site-footer-inner');
+    var cta = document.getElementById('site-call-to-action');
     if (navInner) navInner.innerHTML = renderTopNav(page, section);
     if (footerInner) footerInner.innerHTML = renderFooter(page, section);
+    if (cta) cta.innerHTML = renderCallToAction(section);
   }
 
   if (document.readyState === 'loading') {

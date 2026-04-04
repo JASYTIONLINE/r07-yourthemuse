@@ -326,6 +326,14 @@ Visually separates the audio player from the body text.
     box-sizing: border-box;
 }
 
+/*
+.CallToAction — reusable CTA (content injected by site-include.js into #site-call-to-action)
+display: contents keeps layout identical to a lone <p> inside main — the section is semantic only.
+*/
+.CallToAction {
+    display: contents;
+}
+
 /* 
 .jingle-box a — STYLIZED AUDIO TEXT LINK
 Applies standout style to any text links placed in the jingle box.
@@ -483,7 +491,7 @@ Centers and styles the title of each song tile.
 }
 
 /*
-.AboutFeature — FEATURED TIM (about header "We Are the Guard" only)
+.AboutFeature — FEATURED TIM (about header “We Are the Guard” only)
 Larger square art area than grid TIMs: matches 384×384 asset/placeholder intent; not subject to 1in tile-image caps.
 */
 .about-page .TIM.AboutFeature {
