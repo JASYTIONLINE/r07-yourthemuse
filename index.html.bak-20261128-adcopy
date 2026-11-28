@@ -1,0 +1,132 @@
+<!doctype html>
+<!--
+  STUDY GUIDE (home page): This file pairs with assets/style.css and assets/js/site-include.js.
+  When you read the CSS, look up display, flex-direction, grid-template-rows, width, max-width,
+  min-width, padding, margin, box-sizing, gap, and overflow; those properties decide how boxes are
+  sized and how they participate in normal flow versus flex or grid formatting contexts.
+  When you read the JavaScript, watch how the script locates nodes in the live DOM tree and assigns
+  innerHTML, which replaces the entire markup inside a container in one step.
+-->
+<html lang="en" data-site-page="home" data-site-section="root">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>You are the Muse — Home</title>
+    <!--
+  The stylesheet is applied to the whole document. Rules cascade from global selectors (html, body)
+  into every section below; later rules and more specific selectors override earlier ones when they
+  conflict. Inspect .card and .site-nav in the CSS file to see flex containers that stack or align
+  their children without you adding extra wrapper markup beyond what you see here.
+-->
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+
+<!--
+  The root element carries data-site-section="root" and data-site-page="home" so site-include.js can
+  read document.documentElement.dataset and build correct relative URLs for links. Those attributes do
+  not change layout by themselves; they are inputs to JavaScript that runs after the parser has built
+  the DOM. The script then writes anchor elements into the empty divs in the nav and footer.
+-->
+<body id="top">
+    <!--
+  Global CSS gives body display: grid with three rows (auto, 1fr, auto), so the main column of the
+  page stretches vertically between the nav band and the footer while the nav and footer rows take
+  only the height their content needs. min-width: 0 on direct children of body prevents flex and
+  grid items from refusing to shrink, which would otherwise cause unwanted horizontal overflow.
+-->
+
+    <nav class="site-nav" aria-label="Main navigation">
+        <!--
+  This div starts empty in the HTML file. After DOMContentLoaded, site-include.js sets
+  site-nav-inner.innerHTML to a string of anchor elements. The browser parses that string into real
+  nodes attached under this div, so the navigation structure you see in DevTools was produced by
+  JavaScript, not by static markup. The nav layout (centering links, wrapping on small widths) comes
+  from .site-nav and .site-nav-inner in CSS, which use flexbox.
+-->
+        <div class="site-nav-inner" id="site-nav-inner"></div>
+    </nav>
+
+    <!--
+  .card is a flex container with flex-direction: column, so the heading, subtitle, and following
+  blocks stack top to bottom in document order. width uses min() to cap the box relative to the
+  viewport while margin: auto centers the card in the available horizontal space. Padding increases
+  the area inside the border box before content begins; compare content-box versus border-box in
+  your course materials to see why box-sizing matters for width calculations.
+-->
+    <header class="card">
+        <h1>You are the Muse.</h1>
+        <h2>We turn your story into a custom song. Best of all,
+            it's completely free to try.</h2>
+        <div>
+            <p>Welcome, and thank you for visiting my site. This is a new adventure for me as a budding musician. My
+                passion is creating customized songs drawn from the stories of my clients—songs that capture who you
+                are, what you feel, and the people you love. These songs are more than music; they can become your
+                legacy.</p>
+            <p>Whether you want to commemorate a daughter’s quinceañera or wedding, celebrate a child’s graduation,
+                honor someone you love, or simply share a message from the heart, I take your story and turn it into a
+                song. You can give me only a few details, or write your own lyrics, and I’ll shape them into music that
+                is enjoyable, melodic, and meaningful. You can ask for happy, sad, funny, or even angry—whatever fits
+                the moment. I’ll provide you with a few options to choose from, so the result feels right for you.</p>
+        </div>
+    </header>
+
+    <!--
+  main.card reuses the same flex column layout as the header. main.card also sets overflow-x: clip so
+  wide replaced content (for example native audio controls) cannot expand the card past the width
+  established by siblings on other pages; on the home page the effect is mostly defensive.
+-->
+    <main class="card">
+
+        <!--
+  This anonymous div groups two headings before the jingle section.
+  The flex parent (.card) treats this div as a single flex item. No JavaScript touches this region on the home page.
+-->
+        <div>
+
+            <h2 class="text-center">Would you like to <a href="contents/more-info.html#top">Know More</a>?</h2>
+
+            <h3 class="text-center">Start out by listening to a short demo by clicking the demo button below.</h3>
+        </div>
+
+        <!--
+  .jingle-box is display: inline-block with horizontal margins set to auto inside a flex column
+  parent, which is a common pattern to shrink-wrap the box to its content while still centering
+  it along the cross axis of the flex container. max-width: 100% keeps the box from exceeding
+  the card width on narrow viewports. Inside, rules on .card audio cap media elements at 100% of
+  the container so the control bar does not spill out of the card.
+-->
+        <div class="jingle-box">
+            <h3>Play Jingle Demo</h3>
+
+            <audio controls>
+
+
+                <source src="assets/audio/jingle.mp3" type="audio/mpeg">
+
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+
+        <!-- Copy for this block lives in assets/js/site-include.js (renderCallToAction). -->
+        <section class="CallToAction" id="site-call-to-action" aria-label="Next steps: catalog, order, or contact"></section>
+
+    </main>
+
+    <footer class="site-footer-nav" aria-label="Footer navigation">
+        <!--
+  Same injection target pattern as the top nav: JavaScript fills site-footer-inner with anchors,
+  including mailto and in-page links. Footer layout mirrors the nav flex rules so the link row
+  behaves consistently at different breakpoints (see media queries affecting .site-footer-nav).
+-->
+        <div class="site-nav-inner" id="site-footer-inner"></div>
+    </footer>
+    <!--
+  defer delays execution until HTML parsing finishes, so the DOM nodes above exist when the script
+  runs. The script queries getElementById and writes innerHTML; the outcome is a DOM mutation: new
+  elements appear under the placeholder divs after load.
+-->
+    <script src="assets/js/site-include.js" defer></script>
+</body>
+
+</html>

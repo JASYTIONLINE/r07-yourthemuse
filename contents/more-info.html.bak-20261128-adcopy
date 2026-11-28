@@ -1,0 +1,164 @@
+<!doctype html>
+<!--
+  STUDY GUIDE (more-info page): Compare the body grid (three rows on body in style.css) with .about-page rules.
+  The class on body turns on extra selectors that resize .TIM tiles and images for this layout without
+  duplicating HTML. site-include.js injects nav and footer using data-site-section="contents".
+-->
+
+<html lang="en" data-site-page="more-info" data-site-section="contents">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>You are the Muse — More Info</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<!--
+  Relative stylesheet path reaches the shared CSS one directory up; global layout rules still apply.
+-->
+<body class="about-page" id="top">
+  <!--
+  body fills the middle row of the page grid; about-page-specific rules adjust tile and image sizing.
+-->
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="site-nav-inner" id="site-nav-inner"></div>
+  </nav>
+
+  <!--
+  The header uses .card (flex column). Headings and prose are flex items; .about-header-tim-wrap is another
+  flex item that centers the featured .TIM tile using flex alignment instead of floats or absolute positioning.
+-->
+  <header class="card">
+    <h1>How It All Began</h1>
+    <h2>My Origin Story</h2>
+    <div>
+      <p>
+        This whole idea started when I wanted to create a song in honor of the National Guard—I serve in the Guard
+        myself. I wasn’t a musician; I didn’t know anything about how to write or compose music. I had the idea, though,
+        and I researched how to turn it into a real song with my own music. That work became <cite>We Are the Guard</cite>.
+      </p>
+      <p>
+        After I debuted the song and shared it with others, some of my karaoke singers began asking for custom songs of
+        their own. I wrote three songs for friends, plus a few more drawn from me and my life. From there it grew into
+        what you see today: a business where I produce custom songs for people like you.
+      </p>
+    </div>
+    <div class="about-header-tim-wrap">
+      <div class="TIM AboutFeature">
+        <div class="tile-title">We Are the Guard</div>
+        <div class="tile-image">
+          <img src="https://placehold.co/384x384/0d1117/ffd56a?text=We+Are+the+Guard" width="384" height="384"
+            alt="We are the Guard">
+        </div>
+        <div class="tile-player">
+          <audio preload="none" controls>
+            <source src="../assets/audio/we-are-the-guard.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!--
+  .note-box is a block-level card in the body grid flow; padding and border define its box model region for long copy.
+-->
+  <section class="card note-box">
+    <h2>How this all works</h2>
+    <p>
+      This song began as a request from one of my karaoke singers who loved the music of Patsy Cline, Dolly Parton,
+      Tammy Wynette, Connie Smith, and Debby Boone. She asked me to bring her favorites together, not as a playlist, but
+      as one piece she could perform as if it were her own. I took the lyrics she loved, analyzed their themes, and
+      combined them with my own original lines and transitions to create a single, continuous narrative. Instead of
+      sounding like fragments stitched side by side, the result flows through a full emotional arc of promise, turmoil,
+      reconciliation, and hope. The listener doesn’t need to know the source songs at all — it plays like a cohesive,
+      original composition that stands on its own.
+    </p>
+    <p>
+      Below you’ll find four buttons, each one linked to a different version of this same song. The lyrics never change,
+      but the delivery does — and that’s the whole point. One version is arranged in a traditional country-western
+      style, another is shaped into a heartfelt country ballad, the third leans into a nostalgic country-western feel,
+      and the fourth carries a more melancholy tone. By clicking through and listening to each, you’ll hear how the
+      exact same words can take on entirely different emotions depending on the genre and arrangement. This shows you
+      the power of what I do: I don’t just write or arrange songs, I help shape them to match your story, in your tone,
+      and in your voice. When you hear the differences between these four versions, you’ll understand how flexible and
+      personal this process really is.
+    </p>
+  </section>
+
+  <!--
+  main.card stacks headings and .grid-4col. The grid uses CSS Grid with auto-fitting columns so column count
+  responds to width. Each .TIM is a grid item with an internal grid for title, image, and player rows. Compare with
+  catalog.html, where .catalog-page .grid-4col overrides column templates for denser rows on large screens.
+-->
+  <main class="card">
+    <h2>How It Sounds</h2>
+    <h3>One Song — Four Styles</h3>
+    <br>
+    <p class="text-center">Click on the buttons below, listen to the different versions, and
+      imagine how your own story could be told in the style that fits you best.</p>
+    <div class="grid-4col">
+
+      <div class="TIM">
+        <div class="tile-title">A traditional country &amp; western song</div>
+        <div class="tile-image">
+          <img src="../assets/images/song1.png" alt="Traditional icon">
+        </div>
+        <div class="tile-player">
+          <audio preload="none" controls>
+            <source src="../assets/audio/song1-traditional.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+      </div>
+
+      <div class="TIM">
+        <div class="tile-title">A slow, melancholy ballad</div>
+        <div class="tile-image">
+          <img src="../assets/images/song2.png" alt="Melancholy icon">
+        </div>
+        <div class="tile-player">
+          <audio preload="none" controls>
+            <source src="../assets/audio/song2-melancholy.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+      </div>
+
+      <div class="TIM">
+        <div class="tile-title">A nostalgic tune full of memories</div>
+        <div class="tile-image">
+          <img src="../assets/images/song3.png" alt="Nostalgic icon">
+        </div>
+        <div class="tile-player">
+          <audio preload="none" controls>
+            <source src="../assets/audio/song3-nostalgic.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+      </div>
+
+      <div class="TIM">
+        <div class="tile-title">A heartfelt storytelling ballad</div>
+        <div class="tile-image">
+          <img src="../assets/images/song4.png" alt="Ballad icon">
+        </div>
+        <div class="tile-player">
+          <audio preload="none" controls>
+            <source src="../assets/audio/song4-ballad.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+      </div>
+
+    </div>
+    <!-- Copy: ../assets/js/site-include.js (renderCallToAction). -->
+    <section class="CallToAction" id="site-call-to-action" aria-label="Next steps: catalog, order, or contact"></section>
+  </main>
+
+  <footer class="site-footer-nav" aria-label="Footer navigation">
+    <div class="site-nav-inner" id="site-footer-inner"></div>
+  </footer>
+  <script src="../assets/js/site-include.js" defer></script>
+
+</body>
+
+</html>

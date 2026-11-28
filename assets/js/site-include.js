@@ -3,7 +3,7 @@
  *
  * On <html>:
  *   - data-site-section: "root" (index.html) or "contents" (pages under contents/)
- *   - data-site-page: "home" | "more-info" | "catalog" | "order" for aria-current on that item;
+ *   - data-site-page: "home" | "more-info" | "idea-fairies" | "catalog" | "order" for aria-current on that item;
  *     any other value (e.g. a new page) still gets the same footer and nav; only current-page highlighting skips unknown ids.
 
  * Student reading notes: document.documentElement is the <html> node; its dataset property reflects data-* attributes.
@@ -14,10 +14,10 @@
 (function () {
   var CONTACT_MAILTO =
     'mailto:jasytionline@gmail.com?subject=' +
-    encodeURIComponent('Support Requested: This Is Your Song.') +
+    encodeURIComponent('Support Requested: You are the Muse.') +
     '&body=' +
     encodeURIComponent(
-      'Hello,\n\nThank you for contacting This Is Your Song. Please explain in detail what you are looking for and how I can help you. For example, you might describe a custom song idea, ask questions about the process or pricing, or share any other request.\n\nIf you would like me to call you back, please include your phone number in your message below.\n\nPreferred method of contact (please type one):\n- Phone call\n- Email\n\n'
+      'Hello,\n\nThank you for contacting You are the Muse. Please explain in detail what you are looking for and how I can help you. For example, you might describe a custom song idea, ask questions about the process or pricing, or share any other request.\n\nIf you would like me to call you back, please include your phone number in your message below.\n\nPreferred method of contact (please type one):\n- Phone call\n- Email\n\n'
     );
 
   function paths(section) {
@@ -25,6 +25,7 @@
       return {
         home: 'index.html#top',
         moreInfo: 'contents/more-info.html#top',
+        ideaFairies: 'contents/idea-fairies.html#top',
         catalog: 'contents/catalog.html#top',
         order: 'contents/order.html#top',
       };
@@ -32,6 +33,7 @@
     return {
       home: '../index.html',
       moreInfo: 'more-info.html#top',
+      ideaFairies: 'idea-fairies.html#top',
       catalog: 'catalog.html#top',
       order: 'order.html#top',
     };
@@ -53,6 +55,10 @@
       '"' +
       currentAttr(page, 'more-info') +
       '>More Info</a><a href="' +
+      p.ideaFairies +
+      '"' +
+      currentAttr(page, 'idea-fairies') +
+      '>Idea Fairies</a><a href="' +
       p.catalog +
       '"' +
       currentAttr(page, 'catalog') +
@@ -73,7 +79,7 @@
       p.catalog +
       '">Sample Catalog</a> for ideas or, if you already know what you want, <a href="' +
       orderFormHref +
-      '">Place Your Custom Order</a> and let me create a one-of-a-kind song that is truly yours. Have a question? No problem — just <a href="' +
+      '">Place Your Custom Order</a>. You share the ideas, and I\'ll turn them into a one-of-a-kind song for you and your family. Have a question? No problem — just <a href="' +
       CONTACT_MAILTO +
       '">contact me</a> via email, and I\'ll answer any questions you have.</p>'
     );
@@ -94,6 +100,10 @@
       '"' +
       currentAttr(page, 'more-info') +
       '>More Info</a><a href="' +
+      p.ideaFairies +
+      '"' +
+      currentAttr(page, 'idea-fairies') +
+      '>Idea Fairies</a><a href="' +
       p.catalog +
       '"' +
       currentAttr(page, 'catalog') +

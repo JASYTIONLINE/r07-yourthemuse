@@ -1,0 +1,76 @@
+<!doctype html>
+<!--
+  Idea Fairies page (added 2026-11-28): explains the You are the Muse concept. The customer brings the ideas;
+  I handle the creative process. Uses the shared .card, .note-box, .btn, and .text-center rules in style.css.
+  site-include.js injects nav, footer, and the call-to-action using data-site-section="contents".
+-->
+
+<html lang="en" data-site-page="idea-fairies" data-site-section="contents">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>You are the Muse &mdash; Idea Fairies</title>
+  <link rel="stylesheet" href="../assets/style.css">
+</head>
+
+<body id="top">
+
+  <nav class="site-nav" aria-label="Main navigation">
+    <div class="site-nav-inner" id="site-nav-inner"></div>
+  </nav>
+
+  <header class="card">
+    <h1>Meet the Idea Fairies</h1>
+    <h2>You bring the magic. I bring the music.</h2>
+    <div>
+      <p>Every great song starts with a spark, and that spark comes from you. Here, you are the Idea Fairy: the one
+        who sprinkles in the memories, the names, the inside jokes, and the feelings that make your story yours. You
+        don&rsquo;t need to know anything about music. You&rsquo;re the Muse, and your ideas are the heart of the song.</p>
+      <p>My job is the creative process. I take the ideas you share and shape them into a customized, beautiful song
+        made just for you and your family.</p>
+    </div>
+  </header>
+
+  <main class="card">
+    <h2 class="text-center">How the magic works</h2>
+
+    <div class="note-box">
+      <h2>1. You sprinkle in the ideas</h2>
+      <p>Share whatever you have: a few words, a name, a favorite memory, a mood, or a full set of lyrics. Big or
+        small, every idea counts. You can type it, upload it, or simply record yourself talking about it.</p>
+    </div>
+
+    <div class="note-box">
+      <h2>2. I handle the creative process</h2>
+      <p>I take your ideas and do the work of turning them into music: writing and shaping the lyrics, choosing the
+        style, and building the arrangement so the song sounds and feels the way you imagined.</p>
+    </div>
+
+    <div class="note-box">
+      <h2>3. A song for you and your family</h2>
+      <p>Whether it&rsquo;s a quincea&ntilde;era, a wedding, a graduation, or a tribute to someone you love, the
+        finished song is made to fit your family and your moment, a keepsake you can share for years to come.</p>
+    </div>
+
+    <div class="note-box">
+      <h2>4. You choose your favorite</h2>
+      <p>I&rsquo;ll give you a few options to listen to, so the final version feels exactly right. Best of all,
+        it&rsquo;s completely free to try.</p>
+    </div>
+
+    <h3 class="text-center">Ready to be the Muse?</h3>
+    <p class="text-center"><a class="btn" href="order.html#sample-order">Share your ideas</a></p>
+
+    <!-- Copy: ../assets/js/site-include.js (renderCallToAction). -->
+    <section class="CallToAction" id="site-call-to-action" aria-label="Next steps: catalog, order, or contact"></section>
+  </main>
+
+  <footer class="site-footer-nav" aria-label="Footer navigation">
+    <div class="site-nav-inner" id="site-footer-inner"></div>
+  </footer>
+  <script src="../assets/js/site-include.js" defer></script>
+
+</body>
+
+</html>

@@ -1,0 +1,967 @@
+/* style.css
+   Stylesheet for the This Is Your Song site */
+
+/*This page intentionally has extensive comments to explain the CSS rules. It is a class project and will be used for future reference when creating other pages*/
+/* ===========================================================
+   GLOBAL STYLES
+   These rules apply to every page. They set the site colors,
+   the page layout (header / main / footer), shared typography,
+   link behavior, and reusable classes you can apply anywhere.
+   =========================================================== */
+
+/* 
+THEME COLOR VARIABLES
+This is the :root selector, which defines global CSS custom properties (variables). 
+These values can be reused across the stylesheet to ensure consistent theming and simplify updates.
+
+Each variable represents a visual role in the design:
+--amber: Button background color
+--bg:    Page background color
+--card:  Background for card-style containers
+--gold:  Accent color for borders and headers
+--text:  Default body text color
+
+By changing a value here, the entire site updates accordingly — a scalable, maintainable approach to theming.
+*/
+:root {
+    --amber: #ff9a1f;
+    --bg: #0d1117;
+    --card: #5c1a14;
+    --gold: #ffd56a;
+    --text: #ffffff;
+    /* Shared outer width for nav, footer, and every .card (header / section / main) */
+    --site-max-width: 2100px;
+    --site-horizontal-inset: 24px;
+    /* Card / scale token for headings and derived sizes; body paragraphs use 1.5rem in the p rule below. Fixed UI uses --font-ui. */
+    --font-p: 2rem;
+    --font-ui: 1rem;
+}
+
+/* 
+BASE PAGE LAYOUT GRID
+Applies a 3-row grid to the entire body of the page:
+- Row 1: <header> (auto height)
+- Row 2: <main> (grows to fill available space)
+- Row 3: <footer> (auto height)
+
+This grid ensures consistent structure and vertical alignment on all pages.
+
+*/
+html {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    line-height: 1.55;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+p {
+    font-size: 1.5rem;
+}
+
+/* Broken-image fallback uses this font size instead of inheriting .card / --font-p */
+img {
+    font-size: 1rem;
+}
+
+/* Wide screens (e.g. 2560×1440): no horizontal scrollbar; content stays within viewport */
+@media (min-width: 769px) {
+    html {
+        overflow-x: clip;
+    }
+
+    body {
+        overflow-x: clip;
+    }
+}
+
+/* Grid/flex children can shrink so wide viewports do not gain a horizontal scrollbar */
+body > * {
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* 
+GLOBAL HEADING STYLES
+Ensures all headings use Georgia for contrast, and removes default spacing.
+
+Used for <h1>, <h2>, and <h3> across all pages, to maintain brand consistency.
+*/
+h1,
+h2,
+h3 {
+    color: var(--gold);
+    font-family: Georgia, serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* 
+HEADER ALIGNMENT
+Centers the <h1> and <h2> inside header elements for symmetry and readability.
+Also softens <h2> appearance with smaller size and lighter weight.
+*/
+header h1,
+header h2 {
+    text-align: center;
+}
+
+header h2 {
+    font-size: calc(var(--font-p) * 1.1);
+    font-weight: normal;
+}
+
+/* 
+LINK STYLING
+Makes anchor links amber for visibility and underlines them on hover to indicate interactivity.
+*/
+a {
+    color: #ffb347;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ===========================================================
+   GLOBAL UTILITY CLASSES
+   These classes can be reused on any page.
+   =========================================================== */
+
+/* 
+.btn — UNIVERSAL BUTTON STYLE
+Creates a stylized button using a <a> tag or any other inline element.
+
+- Fixed height (56px, ~1 inch)
+- Centered label using flexbox
+- Uses the --amber and --gold theme colors
+- Applies padding and border radius for visual polish
+
+Designed to visually stand out while remaining flexible in layout.
+*/
+.btn {
+    background: var(--amber);
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--font-ui);
+    font-weight: bold;
+    height: 56px;
+    padding: 0 .5rem;
+    text-align: center;
+    text-decoration: none;
+    width: 20%;
+}
+
+/* 
+.btn HOVER EFFECT
+Brightens the button fill when hovered to give feedback to the user.
+*/
+.btn:hover {
+    background: #ffb347;
+}
+
+/* 
+.card — FRAMED CONTAINER
+Used for header, main content, and footer containers.
+Gives each section a boxed appearance with padding, border, and radius.
+
+- Uses --site-max-width and --site-horizontal-inset (same as nav/footer)
+- Adds spacing between elements vertically
+*/
+.card {
+    background: var(--card);
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    box-sizing: border-box;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    font-size: var(--font-p);
+    gap: 0 12px;
+    margin: 8px auto;
+    max-width: 100%;
+    min-width: 0;
+    padding: 8px;
+    width: min(var(--site-max-width), calc(100% - var(--site-horizontal-inset)));
+}
+
+/* Prevent wide grids/tiles from visually widening <main> past other .card blocks */
+main.card {
+    overflow-x: clip;
+}
+
+/* 
+Ensures media like audio, video, and iframes don't overflow the .card container.
+Maintains clean layout and containment.
+*/
+.card audio,
+.card video,
+.card iframe {
+    max-width: 100%;
+    display: block;
+}
+
+/* 
+MAIN HEADING ALIGNMENT
+Centers headings inside <main> for consistency with header titles and demo sections.
+*/
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6 {
+    text-align: center;
+}
+
+/* 
+TEXT ALIGNMENT UTILITIES
+Utility classes for aligning text without affecting layout:
+- text-center
+- Reusable across any element or container
+*/
+.text-center {
+    text-align: center;
+}
+
+.form-field {
+  width: 100%;
+  max-width: min(600px, 100%);
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  background-color: #000;
+  color: var(--gold);
+  box-sizing: border-box;
+  font-size: var(--font-ui);
+}
+
+.form-field:focus {
+  outline: none;
+  border-color: var(--amber);
+  background-color: #111;
+}
+
+.form-disclaimer {
+  font-size: calc(var(--font-p) * 0.8);
+  line-height: 1.45;
+  color: #c9a860;
+  margin: 0.35rem 0 1rem;
+  max-width: min(1200px, 100%);
+}
+
+@media (min-width: 769px) {
+  .form-field {
+    max-width: min(1200px, 100%);
+  }
+}
+
+@media (max-width: 768px) {
+  .form-field {
+    max-width: 100%;
+  }
+
+  input.form-field[type="text"],
+  input.form-field[type="email"] {
+    min-height: 44px;
+  }
+
+  textarea.form-field {
+    min-height: 10rem;
+    height: auto;
+    resize: vertical;
+    field-sizing: content;
+  }
+}
+
+
+/* ===========================================================
+   INDEX PAGE STYLES
+   These classes are used only on index.html
+   =========================================================== */
+
+/* 
+.jingle-box — AUDIO PLAYER CONTAINER
+Visually separates the audio player from the body text.
+
+- Black background with gold border to draw attention
+- Centered content and internal padding for clarity
+*/
+.jingle-box {
+    background: #000;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    display: inline-block;
+    margin: 12px auto;
+    padding: 12px 20px;
+    text-align: center;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/*
+.CallToAction — reusable CTA (content injected by site-include.js into #site-call-to-action)
+display: contents keeps layout identical to a lone <p> inside main — the section is semantic only.
+*/
+.CallToAction {
+    display: contents;
+}
+
+/* 
+.jingle-box a — STYLIZED AUDIO TEXT LINK
+Applies standout style to any text links placed in the jingle box.
+*/
+.jingle-box a {
+    color: var(--gold);
+    display: block;
+    font-size: calc(var(--font-p) * 1.05);
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* ===========================================================
+   ABOUT PAGE STYLES
+   Used on about.html (samples + order form)
+   =========================================================== */
+
+/* 
+.note-box — EXPLANATORY TEXT BLOCK
+Compact text container placed below the About page heading.
+
+- Black background, gold text
+- Styled to match jingle-box but with smaller text
+*/
+.note-box {
+    background: #000;
+    border: 2px solid var(--gold);
+    border-radius: 8px;
+    color: var(--gold);
+    font-size: calc(var(--font-p) * 0.75);
+    padding: 8px 12px;
+    text-align: center;
+}
+
+.note-box h2 {
+    font-size: 1.211em;
+    margin: 0 0 10px 0;
+}
+
+.note-box p {
+    font-size: inherit;
+    margin: 4px 0;
+}
+
+/* 
+.grid-4col — SONG TILE GRID
+Grid container for sample song players. Automatically fits four tiles per row on wide screens, and wraps as needed.
+
+- Centered, max 800px width
+- Flexible column sizing using minmax
+*/
+.grid-4col {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(160px, 100%), 1fr));
+    gap: 12px;
+    max-width: min(800px, 100%);
+    margin: 0 auto;
+    padding: 0 12px;
+    min-width: 0;
+}
+
+/* 
+.TIM — SONG TILE
+Each tile includes title, image, and audio player stacked vertically.
+
+- Consistent 3-inch height and 2-inch width
+- Keeps layout uniform across the sample grid
+*/
+.TIM {
+    background: #000;
+    border: 3px solid var(--gold);
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: 1in 1in auto;
+    min-height: 3in;
+    height: auto;
+    justify-items: center;
+    align-content: start;
+    padding: 0 6px;
+    width: 2in;
+}
+
+/* 
+.tile-title — TILE HEADER TEXT
+Centers and styles the title of each song tile.
+*/
+.TIM .tile-title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--gold);
+    font-size: calc(var(--font-p) * 0.9);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0;
+    padding: 0;
+}
+
+/* About + catalog TIMs: title row grows with wrapping; titles scale with tile width (cap 0.72× --font-p) */
+.about-page .TIM,
+.catalog-page .TIM {
+    container-type: inline-size;
+    grid-template-rows: auto 1fr auto;
+    row-gap: 8px;
+    padding: 8px 6px;
+    align-content: start;
+    box-sizing: border-box;
+}
+
+.about-page .TIM .tile-image,
+.catalog-page .TIM .tile-image {
+    height: 100%;
+    min-height: 0;
+    align-self: stretch;
+}
+
+.about-page .TIM .tile-image img,
+.catalog-page .TIM .tile-image img {
+    width: 1in;
+    height: 1in;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.about-page .TIM .tile-title,
+.catalog-page .TIM .tile-title {
+    font-size: clamp(0.65rem, 12cqi, calc(var(--font-p) * 0.72));
+    line-height: 1.12;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding-inline: 2px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.about-header-tim-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* About header only: TIM after intro copy; 16px space above card bottom border */
+.about-page header.card .about-header-tim-wrap {
+    margin-top: 0.75rem;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 16px;
+}
+
+/*
+.AboutFeature — FEATURED TIM (about header “We Are the Guard” only)
+Larger square art area than grid TIMs: matches 384×384 asset/placeholder intent; not subject to 1in tile-image caps.
+*/
+.about-page .TIM.AboutFeature {
+    width: min(384px, 100%);
+    max-width: 100%;
+    box-sizing: border-box;
+    grid-template-rows: auto auto auto;
+    row-gap: 10px;
+}
+
+.about-page .TIM.AboutFeature .tile-title {
+    font-size: clamp(0.75rem, 4cqi, calc(var(--font-p) * 0.95));
+}
+
+.about-page .TIM.AboutFeature .tile-image {
+    width: 100%;
+    max-width: 384px;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    min-height: 0;
+    align-self: center;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.about-page .TIM.AboutFeature .tile-image img {
+    width: 100%;
+    height: 100%;
+    max-width: 384px;
+    max-height: 384px;
+    object-fit: contain;
+}
+
+/* 
+.tile-image — TILE IMAGE BLOCK
+Centers and contains a 1x1in image inside the tile.
+*/
+.TIM .tile-image {
+    width: 100%;
+    height: 1in;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+.TIM .tile-image img {
+    width: 1in;
+    height: 1in;
+    object-fit: contain;
+    display: block;
+}
+
+/* 
+.tile-player — TILE AUDIO PLAYER
+Contains and sizes the native audio player.
+Ensures consistency in appearance and prevents overflow.
+*/
+.TIM .tile-player {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Catalog: audio + “Order similar” on one row (desktop); stacked on mobile */
+.TIM .tile-player-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+}
+
+.TIM .tile-player audio {
+    width: min(96px, 100%);
+    max-width: 100%;
+    height: 26px;
+    display: block;
+    margin: 0 auto;
+    transform: scale(0.88);
+    transform-origin: center center;
+}
+
+.TIM .tile-player-inner audio {
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.TIM .btn-order-similar {
+    flex: 0 1 auto;
+    width: auto;
+    max-width: 100%;
+    min-width: 2.6rem;
+    height: auto;
+    min-height: 2.25rem;
+    margin: 0;
+    padding: 4px 6px;
+    font-size: 0.58rem;
+    line-height: 1.08;
+    box-sizing: border-box;
+    align-self: center;
+    text-align: center;
+    white-space: normal;
+    border-width: 1px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.TIM .btn-order-similar .btn-order-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    line-height: 1.05;
+}
+
+.TIM .btn-order-similar .btn-order-stack span {
+    display: block;
+}
+
+/*
+ * Catalog grid: fill the main card (no 1400px cap). Eight columns only when the
+ * row is wide enough for ~8 × min tile width + gaps (~172px/col → ~1460px).
+ * Below that, auto-fill drops to 7, 6… so play + order stay side by side.
+ */
+.catalog-page .grid-4col {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+@media (min-width: 769px) and (max-width: 1519px) {
+    .catalog-page .grid-4col {
+        grid-template-columns: repeat(auto-fill, minmax(172px, 1fr));
+    }
+}
+
+@media (min-width: 1520px) {
+    .catalog-page .grid-4col {
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+}
+
+/* Tiles fill their grid cell so wide rows use space (play + order stay one row) */
+.catalog-page .TIM {
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+}
+
+/* Catalog genre sections: labeled blocks of 8 songs, gold divider between each.
+   Do not set width: 100% here — it overrides .card and breaks the site max-width cap. */
+.catalog-page .catalog-main {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 100%;
+    min-width: 0;
+}
+
+/* Keep each genre block inside the main card when the grid reflows */
+.catalog-page .catalog-section {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.catalog-page .catalog-section:not(:first-child) {
+    border-top: 2px solid var(--gold);
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+}
+
+.catalog-page .catalog-section-title {
+    font-family: Georgia, serif;
+    color: var(--gold);
+    font-size: calc(var(--font-p) * 1.35);
+    font-weight: 600;
+    text-align: center;
+    margin: 0 0 0.85rem;
+    padding: 0;
+}
+
+/* Top navigation — scrolls with page on desktop; pinned only in mobile (see @media below) */
+.site-nav {
+    position: relative;
+    z-index: 2;
+    background: #000;
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, 0.5);
+    width: min(var(--site-max-width), calc(100% - var(--site-horizontal-inset)));
+    max-width: 100%;
+    margin: 8px auto 0;
+}
+
+.site-nav-inner {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem 1.5rem;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0.65rem 0.75rem;
+    min-width: 0;
+}
+
+.site-nav a,
+.site-footer-nav a {
+    color: var(--gold);
+    font-weight: 600;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.95rem;
+    text-decoration: none;
+    padding: 0.3rem 0.15rem;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.site-nav a:hover,
+.site-footer-nav a:hover {
+    color: #fff;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    filter: none;
+}
+
+.site-nav a[aria-current="page"],
+.site-footer-nav a[aria-current="page"] {
+    color: var(--gold);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+}
+
+/* Footer navigation — matching .card border and radius */
+.site-footer-nav {
+    position: relative;
+    z-index: 2;
+    background: #000;
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    box-shadow: 0 -2px 14px rgba(0, 0, 0, 0.45);
+    margin: 8px auto;
+    width: min(var(--site-max-width), calc(100% - var(--site-horizontal-inset)));
+    max-width: 100%;
+}
+
+/* Song grid — phones & small tablets: one card per row, vertical page scroll */
+@media (max-width: 768px) {
+    html,
+    body {
+        max-height: none;
+    }
+
+    body {
+        display: block;
+        min-height: 100vh;
+        padding-top: calc(4.15rem + env(safe-area-inset-top, 0px));
+    }
+
+    .site-nav {
+        position: fixed;
+        top: calc(8px + env(safe-area-inset-top, 0px));
+        left: max(12px, env(safe-area-inset-left, 0px));
+        right: max(12px, env(safe-area-inset-right, 0px));
+        width: auto;
+        margin: 0;
+        background: var(--card);
+        border: 2px solid var(--gold);
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+        padding: 0.45rem 0.5rem 0.5rem;
+        box-sizing: border-box;
+    }
+
+    .site-nav-inner {
+        display: flex;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        gap: 6px;
+        justify-content: stretch;
+        align-items: stretch;
+        flex-wrap: nowrap;
+    }
+
+    .site-nav a,
+    .site-footer-nav a {
+        flex: 1 1 0;
+        min-width: 0;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        padding: 0.55rem 0.15rem;
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: #000;
+        background: var(--amber);
+        border: 2px solid var(--gold);
+        border-radius: 6px;
+        line-height: 1.2;
+        text-decoration: none;
+        text-decoration-thickness: unset;
+    }
+
+    .site-nav a[aria-current="page"],
+    .site-footer-nav a[aria-current="page"] {
+        background: var(--gold);
+        color: #1a0a08;
+        text-decoration: none;
+    }
+
+    .site-nav a:hover,
+    .site-footer-nav a:hover {
+        filter: brightness(1.06);
+        color: #000;
+        text-decoration: none;
+    }
+
+    .site-footer-nav {
+        background: var(--card);
+        border: 2px solid var(--gold);
+        border-radius: 12px;
+        padding: 0.45rem 0.5rem 0.5rem;
+        margin: 8px auto;
+        width: min(var(--site-max-width), calc(100% - var(--site-horizontal-inset)));
+        box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.35);
+        box-sizing: border-box;
+    }
+
+    .site-footer-nav .site-nav-inner {
+        display: flex;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+        gap: 6px;
+        justify-content: stretch;
+        align-items: stretch;
+        flex-wrap: nowrap;
+    }
+
+    .grid-4col {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        max-width: none;
+        width: 100%;
+        margin: 0;
+        padding: 0 0.75rem 0.5rem;
+        box-sizing: border-box;
+    }
+
+    .TIM {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        box-sizing: border-box;
+        grid-template-rows: auto auto auto;
+        justify-self: stretch;
+        padding: 0.85rem 1rem;
+        gap: 0.35rem;
+    }
+
+    .about-page .TIM,
+    .catalog-page .TIM {
+        grid-template-rows: auto auto auto;
+        row-gap: 8px;
+        padding-top: max(8px, 0.85rem);
+        padding-bottom: max(8px, 0.85rem);
+    }
+
+    .TIM .tile-title {
+        font-size: var(--font-p);
+        padding-bottom: 0.25rem;
+    }
+
+    .TIM .tile-image {
+        height: auto;
+        min-height: 4.5rem;
+    }
+
+    .TIM .tile-image img {
+        width: min(5.5rem, 28vw);
+        height: min(5.5rem, 28vw);
+    }
+
+    .TIM .tile-player {
+        width: 100%;
+    }
+
+    .TIM .tile-player-inner {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        flex-wrap: nowrap;
+    }
+
+    .TIM .tile-player audio {
+        width: min(100%, calc(100% - 2rem));
+        max-width: 340px;
+        height: 36px;
+        transform: none;
+        margin: 0 auto;
+    }
+
+    .TIM .btn-order-similar {
+        width: 100%;
+        max-width: 280px;
+        flex: 0 0 auto;
+        min-height: 40px;
+        padding: 6px 10px;
+        font-size: 0.72rem;
+        border-width: 2px;
+        white-space: normal;
+        order: 1;
+    }
+
+    .TIM .tile-player-inner audio {
+        order: 0;
+    }
+}
+
+/* ===========================================================
+   ORDER FORM (about page)
+   =========================================================== */
+
+.sample-order-box {
+    display: block;
+}
+
+.order-confirmation {
+    color: var(--gold);
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.order-page .order-mail-hint {
+    margin: 0 0 0.75rem;
+}
+
+/* ===========================================================
+   RESPONSIVE FIXES FOR MOBILE DEVICES (≤ 600px)
+   =========================================================== */
+
+@media (max-width: 600px) {
+    .btn {
+        width: 100%;
+        min-width: unset;
+        max-width: 320px;
+        margin: 0 auto 8px;
+    }
+}

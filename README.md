@@ -1,6 +1,6 @@
-# This Is Your Song
+# You are the Muse
 
-A static, multi-page marketing and catalog site for **This Is Your Song**—a custom songwriting service. Visitors can learn about the offering, hear sample tracks organized by genre, and use an order form (with a mailto fallback for direct email).
+A static, multi-page marketing and catalog site for **You are the Muse**—a custom songwriting service. Visitors can learn about the offering, hear sample tracks organized by genre, and use an order form (with a mailto fallback for direct email).
 
 **Live site:** deploy this repository to any static host (for example [GitHub Pages](https://pages.github.com/)) with the repository root as the document root so `index.html` loads at `/`.
 
@@ -228,7 +228,7 @@ A future improvement (optional) is a small JSON + build script to generate the c
 
 ### Mailto and branding
 
-Contact and order mailto links use a consistent subject line (**This Is Your Song**). To change the address or template, edit:
+Contact and order mailto links use a consistent subject line (**You are the Muse**). To change the address or template, edit:
 
 - [`assets/js/site-include.js`](assets/js/site-include.js) (`CONTACT_MAILTO`) — also used by the injected CTA “contact me” link and nav/footer **Contact**.
 - The mailto `href` in [`contents/order.html`](contents/order.html) if you use a different template for the inline “open a prefilled message” link.
